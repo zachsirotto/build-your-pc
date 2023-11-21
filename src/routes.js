@@ -44,9 +44,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
-import ContactUs from "layouts/pages/landing-pages/contact-us";
-import Author from "layouts/pages/landing-pages/author";
 import SignIn from "layouts/pages/authentication/sign-in";
+import Register from "layouts/pages/authentication/register";
+import Profile from "layouts/pages/profile";
+import Dashboard from "layouts/pages/dashboard";
 
 // Sections
 import PageHeaders from "layouts/sections/page-sections/page-headers";
@@ -68,6 +69,24 @@ import ProgressBars from "layouts/sections/elements/progress-bars";
 import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 
+function getLoggedInPages(isLoggedIn) {
+  if (isLoggedIn) {
+    return [
+      {
+        name: "my profile",
+        route: "/pages/profile",
+        component: <Profile />,
+      },
+      {
+        name: "dashboard",
+        route: "/pages/dashboard",
+        component: <Dashboard />,
+      },
+    ];
+  }
+  return [];
+}
+
 const routes = [
   {
     name: "pages",
@@ -76,22 +95,12 @@ const routes = [
     rowsPerColumn: 2,
     collapse: [
       {
-        name: "landing pages",
+        name: "pages",
         collapse: [
           {
-            name: "about us",
-            route: "/pages/landing-pages/about-us",
+            name: "home",
+            route: "/",
             component: <AboutUs />,
-          },
-          {
-            name: "contact us",
-            route: "/pages/landing-pages/contact-us",
-            component: <ContactUs />,
-          },
-          {
-            name: "author",
-            route: "/pages/landing-pages/author",
-            component: <Author />,
           },
         ],
       },
@@ -103,6 +112,12 @@ const routes = [
             route: "/pages/authentication/sign-in",
             component: <SignIn />,
           },
+          {
+            name: "register",
+            route: "/pages/authentication/register",
+            component: <Register />,
+          },
+          getLoggedInPages(),
         ],
       },
     ],
@@ -267,7 +282,7 @@ const routes = [
   {
     name: "github",
     icon: <GitHubIcon />,
-    href: "https://www.github.com/creativetimofficial/material-kit-react",
+    href: "https://www.github.com/zachsirotto/build-your-pc",
   },
 ];
 

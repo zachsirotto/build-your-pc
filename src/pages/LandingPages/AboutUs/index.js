@@ -89,11 +89,10 @@ function AboutUs() {
                 },
               })}
             >
-              Work with an amazing design
+              Build your PC
             </MKTypography>
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-              We&apos;re constantly trying to express ourselves and actualize our dreams. If you
-              have the opportunity to play this game
+            Craft your dream rig with ease using our intuitive Build Configurator. Explore a vast component database, get expert guidance, and connect with a vibrant community of PC enthusiasts. Whether you're a gamer, content creator, or tech novice, PCBuilderHub is your one-stop destination for creating the ultimate PC tailored to your needs. Start your journey now &ndash; build, connect, and elevate your computing experience!
             </MKTypography>
             <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
               create account
@@ -140,3 +139,14 @@ function AboutUs() {
 }
 
 export default AboutUs;
+
+/* <Container>
+<Grid container item justifyContent="center" xs={12} lg={4} mx="auto">
+  <AppBar position="static">
+    <Tabs value={activeTab} onChange={handleTabType}>
+      <Tab label="My Profile" />
+      <Tab label="Dashboard" />
+    </Tabs>
+  </AppBar>
+</Grid>
+</Container> */

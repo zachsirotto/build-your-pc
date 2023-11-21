@@ -47,58 +47,8 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function SignInBasic() {
   const [rememberMe, setRememberMe] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setSubmitted(false);
-  };
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    setSubmitted(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email === "" || password === "") {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-    }
-  };
-
-  const successMessage = () => {
-    return (
-      <div
-        className="success"
-        style={{
-          display: submitted ? "" : "none",
-        }}
-      >
-        <h1>User {name} successfully registered!!</h1>
-      </div>
-    );
-  };
-
-  const errorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: error ? "" : "none",
-        }}
-      >
-        <h1>Please enter all the fields</h1>
-      </div>
-    );
-  };
 
   return (
     <>
@@ -106,8 +56,8 @@ function SignInBasic() {
         routes={routes}
         action={{
           type: "external",
-          route: "#",
-          label: "Support",
+          route: "https://www.creative-tim.com/product/material-kit-react",
+          label: "free download",
           color: "info",
         }}
         transparent
@@ -167,17 +117,13 @@ function SignInBasic() {
                   </Grid>
                 </Grid>
               </MKBox>
-              <div className="messages">
-                {errorMessage()}
-                {successMessage()}
-              </div>
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
                   <MKBox mb={2}>
-                    <MKInput onChange={handleEmail} type="email" label="Email" fullWidth />
+                    <MKInput type="email" label="Email" fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput onChange={handlePassword} type="password" label="Password" fullWidth />
+                    <MKInput type="password" label="Password" fullWidth />
                   </MKBox>
                   <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -192,7 +138,7 @@ function SignInBasic() {
                     </MKTypography>
                   </MKBox>
                   <MKBox mt={4} mb={1}>
-                    <MKButton onClick={handleSubmit} variant="gradient" color="info" fullWidth>
+                    <MKButton variant="gradient" color="info" fullWidth>
                       sign in
                     </MKButton>
                   </MKBox>
@@ -201,7 +147,7 @@ function SignInBasic() {
                       Don&apos;t have an account?{" "}
                       <MKTypography
                         component={Link}
-                        to="/pages/authentication/register"
+                        to="/authentication/sign-up/cover"
                         variant="button"
                         color="info"
                         fontWeight="medium"
@@ -223,7 +169,5 @@ function SignInBasic() {
     </>
   );
 }
-
-// TODO: run listener on id=sign-in and set SignedIn bool for routes
 
 export default SignInBasic;

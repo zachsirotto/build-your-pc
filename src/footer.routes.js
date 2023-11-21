@@ -74,16 +74,16 @@ export default {
   ],
   copyright: (
     <MKTypography variant="button" fontWeight="regular">
-      All rights reserved. Copyright &copy; {date} Material Kit by{" "}
+      All rights reserved. Copyright &copy; {date} Build your PC by{" "}
       <MKTypography
         component="a"
-        href="https://www.suhhdude.com"
+        href="https://www.linkedin.com/in/zachsirotto/"
         target="_blank"
         rel="noreferrer"
         variant="button"
         fontWeight="regular"
       >
-        Zach Sir
+        Zach
       </MKTypography>
       .
     </MKTypography>

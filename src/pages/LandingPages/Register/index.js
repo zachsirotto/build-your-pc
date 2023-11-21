@@ -15,12 +15,8 @@ Coded by www.creative-tim.com
 
 import { useState } from "react";
 
-// react-router-dom components
-import { Link } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 
@@ -46,27 +42,81 @@ import routes from "routes";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function SignInBasic() {
-  const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+  const [repeatPasswordSuccess, setRepeatPasswordSuccess] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
+    if (validateEmail(e.target.value)) {
+      setEmailSuccess(true);
+      setEmailError(false);
+    } else {
+      setEmailSuccess(false);
+      setEmailError(true);
+    }
     setSubmitted(false);
+  };
+
+  const validatePassword = (password) => {
+    return String(password).match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
   };
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
+    if (validatePassword(e.target.value)) {
+      setPasswordSuccess(true);
+      setPasswordError(false);
+      if (e.target.value == repeatPassword) {
+        setRepeatPasswordSuccess(true);
+        setRepeatPasswordError(false);
+      }
+    } else {
+      setPasswordSuccess(false);
+      setPasswordError(true);
+    }
+    setSubmitted(false);
+  };
+
+  const handleRepeatPassword = (e) => {
+    setRepeatPassword(e.target.value);
+    if (e.target.value != password || passwordError) {
+      setError(true);
+      setRepeatPasswordError(true);
+      setRepeatPasswordSuccess(false);
+    } else {
+      setRepeatPasswordError(false);
+      setRepeatPasswordSuccess(true);
+    }
     setSubmitted(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (
+      email === "" ||
+      password === "" ||
+      repeatPassword === "" ||
+      repeatPasswordError ||
+      passwordError ||
+      emailError
+    ) {
       setError(true);
     } else {
       setSubmitted(true);
@@ -147,7 +197,7 @@ function SignInBasic() {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Sign in
+                  Register
                 </MKTypography>
                 <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                   <Grid item xs={2}>
@@ -174,42 +224,39 @@ function SignInBasic() {
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
                   <MKBox mb={2}>
-                    <MKInput onChange={handleEmail} type="email" label="Email" fullWidth />
+                    <MKInput
+                      onChange={handleEmail}
+                      type="email"
+                      label="Email"
+                      error={emailError}
+                      success={emailSuccess}
+                      fullWidth
+                    />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput onChange={handlePassword} type="password" label="Password" fullWidth />
+                    <MKInput
+                      onChange={handlePassword}
+                      type="password"
+                      label="Password"
+                      error={passwordError}
+                      success={passwordSuccess}
+                      fullWidth
+                    />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
+                  <MKBox mb={2}>
+                    <MKInput
+                      onChange={handleRepeatPassword}
+                      type="repeat-password"
+                      label="Repeat Password"
+                      error={repeatPasswordError}
+                      success={repeatPasswordSuccess}
+                      fullWidth
+                    />
                   </MKBox>
                   <MKBox mt={4} mb={1}>
                     <MKButton onClick={handleSubmit} variant="gradient" color="info" fullWidth>
-                      sign in
+                      register
                     </MKButton>
-                  </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
-                      <MKTypography
-                        component={Link}
-                        to="/pages/authentication/register"
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        textGradient
-                      >
-                        Sign up
-                      </MKTypography>
-                    </MKTypography>
                   </MKBox>
                 </MKBox>
               </MKBox>
