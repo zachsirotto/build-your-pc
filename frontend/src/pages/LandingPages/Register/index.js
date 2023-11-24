@@ -83,28 +83,28 @@ function SignInBasic() {
     if (validatePassword(e.target.value)) {
       setPasswordSuccess(true);
       setPasswordError(false);
-      if (e.target.value == repeatPassword) {
-        setRepeatPasswordSuccess(true);
-        setRepeatPasswordError(false);
-      }
     } else {
       setPasswordSuccess(false);
       setPasswordError(true);
     }
-    setSubmitted(false);
+    if (e.target.value == repeatPassword) {
+      setRepeatPasswordSuccess(true);
+      setRepeatPasswordError(false);
+    } else {
+      setRepeatPasswordSuccess(false);
+      setRepeatPasswordError(true);
+    }
   };
 
   const handleRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
-    if (e.target.value != password || passwordError) {
-      setError(true);
+    if (e.target.value != password) {
       setRepeatPasswordError(true);
       setRepeatPasswordSuccess(false);
     } else {
       setRepeatPasswordError(false);
       setRepeatPasswordSuccess(true);
     }
-    setSubmitted(false);
   };
 
   const handleSubmit = (e) => {
@@ -126,27 +126,49 @@ function SignInBasic() {
 
   const successMessage = () => {
     return (
-      <div
+      <MKTypography
         className="success"
+        variant="body1"
+        color="black"
+        textAlign="center"
+        opacity={0.8}
+        mt={1}
+        mb={3}
         style={{
           display: submitted ? "" : "none",
         }}
       >
-        <h1>User {name} successfully registered!!</h1>
-      </div>
+        <h4>
+          <center>
+            <br />
+            User {email}
+            <br />
+            successfully registered!!
+          </center>
+        </h4>
+      </MKTypography>
     );
   };
 
   const errorMessage = () => {
     return (
-      <div
+      <MKTypography
         className="error"
+        variant="body1"
+        color="black"
+        textAlign="center"
+        opacity={0.8}
+        mt={1}
+        mb={3}
         style={{
           display: error ? "" : "none",
         }}
       >
-        <h1>Please enter all the fields</h1>
-      </div>
+        <h4>
+          <br />
+          Please correct the below fields
+        </h4>
+      </MKTypography>
     );
   };
 
@@ -201,17 +223,35 @@ function SignInBasic() {
                 </MKTypography>
                 <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                   <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
+                    <MKTypography
+                      component={MuiLink}
+                      href="#"
+                      variant="body1"
+                      color="white"
+                      hidden={submitted}
+                    >
                       <FacebookIcon color="inherit" />
                     </MKTypography>
                   </Grid>
                   <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
+                    <MKTypography
+                      component={MuiLink}
+                      href="#"
+                      variant="body1"
+                      color="white"
+                      hidden={submitted}
+                    >
                       <GitHubIcon color="inherit" />
                     </MKTypography>
                   </Grid>
                   <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
+                    <MKTypography
+                      component={MuiLink}
+                      href="#"
+                      variant="body1"
+                      color="white"
+                      hidden={submitted}
+                    >
                       <GoogleIcon color="inherit" />
                     </MKTypography>
                   </Grid>
@@ -222,7 +262,7 @@ function SignInBasic() {
                 {successMessage()}
               </div>
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
+                <MKBox component="form" role="form" hidden={submitted}>
                   <MKBox mb={2}>
                     <MKInput
                       onChange={handleEmail}

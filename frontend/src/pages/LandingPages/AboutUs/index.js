@@ -92,9 +92,18 @@ function AboutUs() {
               Build your PC
             </MKTypography>
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-            Craft your dream rig with ease using our intuitive Build Configurator. Explore a vast component database, get expert guidance, and connect with a vibrant community of PC enthusiasts. Whether you're a gamer, content creator, or tech novice, PCBuilderHub is your one-stop destination for creating the ultimate PC tailored to your needs. Start your journey now &ndash; build, connect, and elevate your computing experience!
+              Craft your dream rig with ease using our intuitive Build Configurator. Explore a vast
+              component database, get expert guidance, and connect with a vibrant community of PC
+              enthusiasts. Whether you&apos;re a gamer, content creator, or tech novice,
+              PCBuilderHub is your one-stop destination for creating the ultimate PC tailored to
+              your needs. Start your journey now &ndash; build, connect, and elevate your computing
+              experience!
             </MKTypography>
-            <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
+            <MKButton
+              color="default"
+              href="/pages/authentication/register"
+              sx={{ color: ({ palette: { dark } }) => dark.main }}
+            >
               create account
             </MKButton>
             <MKTypography variant="h6" color="white" mt={8} mb={1}>

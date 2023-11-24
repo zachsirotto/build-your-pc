@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "build-your-pc-backend"
+version = "0.1.0"
+description = ""
+authors = ["Zach Sirotto <zach.sirotto@ibm.com>"]
+readme = "README.md"
+packages = [{include = "build_your_pc_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
