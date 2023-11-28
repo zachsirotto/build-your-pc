@@ -1,8 +1,11 @@
+import datetime
 from typing import AsyncGenerator
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Integer, String, DateTime
+from app.models import UserCreate
 
 DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 
@@ -13,6 +16,9 @@ class Base(DeclarativeBase):
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
     pass
+    # id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    # first_name: Mapped[str] = mapped_column(String)
+    # birthdate: Mapped[datetime.date] = mapped_column(DateTime)
 
 
 engine = create_async_engine(DATABASE_URL)

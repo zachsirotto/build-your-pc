@@ -13,7 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState, createContext } from "react";
+import axios from "axios";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -51,6 +52,7 @@ function SignInBasic() {
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -71,6 +73,7 @@ function SignInBasic() {
     } else {
       setSubmitted(true);
       setError(false);
+      signIn();
     }
   };
 
@@ -82,7 +85,7 @@ function SignInBasic() {
           display: submitted ? "" : "none",
         }}
       >
-        <h1>User {name} successfully registered!!</h1>
+        {email} successfully signed in
       </div>
     );
   };
@@ -95,19 +98,43 @@ function SignInBasic() {
           display: error ? "" : "none",
         }}
       >
-        <h1>Please enter all the fields</h1>
+        Please enter all the fields
       </div>
     );
   };
 
+  const signIn = async (email, password) => {
+    try {
+      const response = await axios.request({
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8000/auth/jwt/login",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          username: email,
+          password: password,
+        }),
+      });
+      console.log(JSON.stringify(response.data));
+      if (response.data["accessToken"]) {
+        setAccessToken(response.data["accessToken"]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
+      <UserContext.Provider value={{ email: email, accessToken: accessToken }} />
       <DefaultNavbar
         routes={routes}
         action={{
           type: "external",
           route: "#",
-          label: "Support",
+          label: accessToken ? "Sign Out" : "Sign In",
           color: "info",
         }}
         transparent
@@ -227,3 +254,5 @@ function SignInBasic() {
 // TODO: run listener on id=sign-in and set SignedIn bool for routes
 
 export default SignInBasic;
+
+export const UserContext = createContext(null);

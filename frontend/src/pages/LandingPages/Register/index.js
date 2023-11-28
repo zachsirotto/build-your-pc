@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import axios from "axios";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -121,6 +122,7 @@ function SignInBasic() {
     } else {
       setSubmitted(true);
       setError(false);
+      register(email, password);
     }
   };
 
@@ -129,7 +131,7 @@ function SignInBasic() {
       <MKTypography
         className="success"
         variant="body1"
-        color="black"
+        color="dark"
         textAlign="center"
         opacity={0.8}
         mt={1}
@@ -138,14 +140,10 @@ function SignInBasic() {
           display: submitted ? "" : "none",
         }}
       >
-        <h4>
-          <center>
-            <br />
-            User {email}
-            <br />
-            successfully registered!!
-          </center>
-        </h4>
+        <br />
+        User {email}
+        <br />
+        successfully registered!!
       </MKTypography>
     );
   };
@@ -155,7 +153,7 @@ function SignInBasic() {
       <MKTypography
         className="error"
         variant="body1"
-        color="black"
+        color="dark"
         textAlign="center"
         opacity={0.8}
         mt={1}
@@ -164,12 +162,31 @@ function SignInBasic() {
           display: error ? "" : "none",
         }}
       >
-        <h4>
-          <br />
-          Please correct the below fields
-        </h4>
+        <br />
+        Please correct the below fields
       </MKTypography>
     );
+  };
+
+  const register = async (email, password) => {
+    try {
+      const response = await axios.request({
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8000/auth/register",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          email: email,
+          password: password,
+          is_superuser: false,
+        }),
+      });
+      console.log(JSON.stringify(response.data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

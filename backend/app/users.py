@@ -1,14 +1,17 @@
+import contextlib
 import uuid
 from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.db import SQLAlchemyUserDatabase
+from fastapi_users.exceptions import UserAlreadyExists
 from fastapi_users.authentication import (
     AuthenticationBackend,
     BearerTransport,
     JWTStrategy,
 )
-from app.db import User, get_user_db
+from app.db import User, get_async_session, get_user_db
+from app.models import UserCreate
 
 SECRET = "SECRET"
 
